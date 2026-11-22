@@ -78,7 +78,7 @@ export function UserSidebar({
       items: [
         {
           href: `/users/${userId}/templates`,
-          label: "إنشاء القوالب",
+          label: "إدارة القوالب",
           icon: LayoutTemplate,
         },
         {
