@@ -34,14 +34,16 @@ export function IndividualMessagesClient({
   userId,
   initialMessages,
   accountStatus,
+  initialCustomer,
 }: {
   userId: string
+  initialCustomer?: { name: string; phone: string }
   initialMessages: Message[]
   accountStatus: "active" | "paused" | "suspended"
 }) {
   const canSend = accountStatus === "active"
   const [messages, setMessages] = useState(initialMessages)
-  const [phone, setPhone] = useState("")
+  const [phone, setPhone] = useState(initialCustomer?.phone || "")
   const [messageText, setMessageText] = useState("")
   const [sending, setSending] = useState(false)
   const [templates, setTemplates] = useState<Template[]>([])
@@ -93,6 +95,7 @@ export function IndividualMessagesClient({
     const cleaned = phoneNumber.replace(/\D/g, "")
 
     if (!cleaned) return ""
+    if (phoneNumber.trim().startsWith("+")) return cleaned
 
     // التحقق إذا كان الرقم يبدأ برمز دولة معروف
     const hasCountryCode = countries.some(

@@ -152,6 +152,7 @@ export type AppointmentMessage = typeof appointmentMessages.$inferSelect
 
 // دليل العملاء، مع منع تكرار رقم الهاتف داخل الحساب الواحد.
 export const customers = pgTable("customers", {
+  code: text().notNull().default(""),
   id: serial().primaryKey(),
   userId: text("user_id").notNull(),
   name: text().notNull(),

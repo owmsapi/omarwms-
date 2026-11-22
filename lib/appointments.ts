@@ -69,6 +69,7 @@ export const COUNTRY_CODES = [
 export function normalizePhone(phone: string, countryCode: string) {
   const cleaned = phone.replace(/\D/g, "").replace(/^00/, "")
   if (!cleaned) return ""
+  if (phone.trim().startsWith("+")) return cleaned
   if (COUNTRY_CODES.some((c) => cleaned.startsWith(c.code) && cleaned.length > c.code.length + 7)) return cleaned
   if (cleaned.startsWith("0")) return `${countryCode}${cleaned.slice(1)}`
   return `${countryCode}${cleaned}`
