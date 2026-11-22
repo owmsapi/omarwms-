@@ -86,6 +86,7 @@ export function UserSidebar({
           label: "رسائل فردية",
           icon: MessageSquare,
         },
+        { href: `/users/${userId}/customers`, label: "العملاء", icon: Users },
         { href: `/users/${userId}/bulk`, label: "رسائل جماعية", icon: Users },
         {
           href: `/users/${userId}/free-messages`,
