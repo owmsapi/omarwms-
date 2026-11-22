@@ -1,4 +1,4 @@
-import { pgTable, serial, text, timestamp, integer, boolean, jsonb, index } from "drizzle-orm/pg-core"
+import { pgTable, serial, text, timestamp, integer, boolean, jsonb, index, uniqueIndex } from "drizzle-orm/pg-core"
 
 // جدول قديم: خطط الأسعار أصبحت تُحفظ وتُقرأ من Supabase (lib/catalog.ts). يبقى هنا لعدم حذف بيانات سابقة.
 // خطط الأسعار التي يديرها الأدمن. المبالغ مخزنة بأصغر وحدة (قرش / هللة).
@@ -149,3 +149,12 @@ export type DiscountCode = typeof discountCodes.$inferSelect
 export type PaymobSession = typeof paymobSessions.$inferSelect
 export type AppointmentTemplate = typeof appointmentTemplates.$inferSelect
 export type AppointmentMessage = typeof appointmentMessages.$inferSelect
+
+// دليل العملاء، مع منع تكرار رقم الهاتف داخل الحساب الواحد.
+export const customers = pgTable("customers", {
+  id: serial().primaryKey(),
+  userId: text("user_id").notNull(),
+  name: text().notNull(),
+  phone: text().notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+}, (t) => [uniqueIndex("customers_user_phone_idx").on(t.userId, t.phone)])
