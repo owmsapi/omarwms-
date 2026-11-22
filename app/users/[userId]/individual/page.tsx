@@ -1,10 +1,13 @@
+import { getCustomer } from "@/app/users/[userId]/customers/actions"
 import { createAdminClient } from "@/lib/supabase/admin"
 import { IndividualMessagesClient } from "@/components/users/individual-messages-client"
 
 export const revalidate = 0
 
-export default async function IndividualMessagesPage({ params }: { params: Promise<{ userId: string }> }) {
+export default async function IndividualMessagesPage({ params, searchParams }: { params: Promise<{ userId: string }>; searchParams: Promise<{ customerId?: string }> }) {
   const { userId } = await params
+  const { customerId } = await searchParams
+  const customer = customerId && /^[1-9]\d*$/.test(customerId) ? await getCustomer(userId, Number(customerId)) : null
   const supabase = createAdminClient()
 
   const [{ data: messages }, { data: profile }] = await Promise.all([
@@ -18,6 +21,7 @@ export default async function IndividualMessagesPage({ params }: { params: Promi
 
   return (
     <IndividualMessagesClient
+      initialCustomer={customer ? { name: customer.name, phone: `+${customer.phone}` } : undefined}
       userId={userId}
       initialMessages={messages || []}
       accountStatus={profile?.account_status === "active" && profile?.account_active_until && new Date(profile.account_active_until) < new Date() ? "suspended" : profile?.account_status || (profile?.is_active ? "active" : "suspended")}

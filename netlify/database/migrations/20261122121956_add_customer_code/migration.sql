@@ -1,0 +1,1 @@
+ALTER TABLE "customers" ADD COLUMN "code" text DEFAULT '' NOT NULL;

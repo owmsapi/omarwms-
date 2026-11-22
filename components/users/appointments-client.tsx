@@ -90,10 +90,12 @@ const selectClass =
 export function AppointmentsClient({
   userId,
   canSend,
+  initialCustomer,
   initialTemplates,
   initialMessages,
 }: {
   userId: string
+  initialCustomer?: { name: string; phone: string }
   canSend: boolean
   initialTemplates: Template[]
   initialMessages: LogItem[]
@@ -105,8 +107,8 @@ export function AppointmentsClient({
   const defaultTemplate = initialTemplates.find((t) => t.isDefault) ?? initialTemplates[0]
   const [templateId, setTemplateId] = useState<number | null>(defaultTemplate?.id ?? null)
   const [body, setBody] = useState(defaultTemplate?.body ?? DEFAULT_APPOINTMENT_TEMPLATE.body)
-  const [patientName, setPatientName] = useState("")
-  const [phone, setPhone] = useState("")
+  const [patientName, setPatientName] = useState(initialCustomer?.name || "")
+  const [phone, setPhone] = useState(initialCustomer?.phone || "")
   const [countryCode, setCountryCode] = useState("966")
   const [date, setDate] = useState("")
   const [time, setTime] = useState("")
