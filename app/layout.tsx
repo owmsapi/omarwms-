@@ -19,7 +19,6 @@ const tajawal = Tajawal({
 export const metadata: Metadata = {
   title: "o-wms | نظام إدارة رسائل واتساب",
   description: "o-wms نظام متكامل لإدارة وإرسال رسائل واتساب الفردية والجماعية",
-  generator: "v0.app",
   icons: {
     icon: "/logo.png",
     apple: "/logo.png",
