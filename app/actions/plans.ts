@@ -23,8 +23,8 @@ function parse(input: PlanInput) {
   const priceEgp = Number(input.priceEgp)
   const priceSar = Number(input.priceSar)
   if (!input.name.trim()) throw new Error("اسم الخطة مطلوب")
-  if (!Number.isFinite(priceEgp) || priceEgp <= 0) throw new Error("سعر الجنيه المصري غير صالح")
-  if (!Number.isFinite(priceSar) || priceSar <= 0) throw new Error("سعر الريال السعودي غير صالح")
+  if (!Number.isFinite(priceEgp) || priceEgp < 0) throw new Error("سعر الجنيه المصري غير صالح")
+  if (!Number.isFinite(priceSar) || priceSar < 0) throw new Error("سعر الريال السعودي غير صالح")
   if (input.interval !== "month" && input.interval !== "year") throw new Error("مدة الفوترة غير صالحة")
   return {
     name: input.name.trim(),
